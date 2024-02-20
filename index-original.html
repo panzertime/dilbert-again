@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Dilbert Website 2000</title>
+<style type="text/css">
+body {
+	background-color: #020507;
+	text-align: center;
+        position: fixed;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	font: small-caps 144px sans-serif;
+	font-weight: bold;
+}
+.first {
+	color: red;
+	transform: skew(12deg, 0deg);
+}
+.second {
+	color: green;
+	font-style: oblique;
+}
+.third {
+	color: blue;
+	transform: skew(12deg, 0deg);
+}
+</style>
+    <script>
+        function getRandomDate() {
+            start = new Date(1989, 4, 16)
+            end = new Date(2023, 3, 12)
+            const timeDiff = end.getTime() - start.getTime();
+            const randomTime = Math.random() * timeDiff;
+            const randomDate = new Date(start.getTime() + randomTime)
+            return randomDate.toISOString().split("T")[0]
+        }
+
+        async function checkLink(url) { 
+            return (await fetch(url)).ok 
+        }
+
+        function openComic() {
+            url = "https://dilberts.s3.amazonaws.com/" + getRandomDate()
+
+            if(checkLink(url + ".gif")) {
+                window.open(url + ".gif", '_blank')
+            } else {
+                window.open(url + ".jpg", '_blank')
+            }
+            console.log(url)
+        }
+    </script>
+	</head>
+	<body>
+	    <div class="first">
+		    Dilbert
+	    </div>
+	    <div class="second">
+		    Website
+	    </div>
+	    <div class="third">
+		    2000
+	    </div>
+        <div>
+            <button type="button" onclick="openComic()">Random Comic</button>
+        <div>
+	</body>
+</html>
