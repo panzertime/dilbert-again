@@ -10,6 +10,13 @@
 		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 		<link rel="manifest" href="/site.webmanifest">
 
+		<meta property="og:title" content=" " />
+		<meta property="og:site_name" content="Dilbert Website 2000" />
+		<meta property="og:type" content="website" />
+		<meta property="og:image" content=" " />
+		<meta property="og:url" content=" " />
+
+
 <style type="text/css">
 body {
 	background-color: #020507;
@@ -57,8 +64,23 @@ body {
     <script>
 		var currentDate = new Date(2001, 9, 11)
 
+		function setGraphProperty(propName, propValue) {
+			let meta = document.querySelector(`meta[property="og:${propName}"]`);
+			meta.setAttribute('content', propValue);
+		}
+
 		function dateUrl(d) {
 			return d.toISOString().split("T")[0]
+		}
+
+		function dateString(d) {
+			const options = {
+				weekday: "long",
+				year: "numeric",
+				month: "long",
+				day: "numeric"
+			};
+			return d.toLocaleDateString(undefined, options);
 		}
 
         function getRandomDate() {
@@ -82,6 +104,9 @@ body {
 			windowUrl = "/index.html?comic=" + dateUrl(currentDate)
 			image = document.getElementById("comic")
 			image.src = imageUrl
+			setGraphProperty("title", `Dilbert from ${dateString(currentDate)}`)
+			setGraphProperty("image", imageUrl)
+			setGraphProperty("url", `https://dilbert.transglobal.world${windowUrl}`)
 			window.history.replaceState(null, "", windowUrl)
 		}
 
