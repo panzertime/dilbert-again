@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Dilbert Website 2000</title>
+
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+		<link rel="manifest" href="/site.webmanifest">
+
+		<meta property="og:title" content="[% comic_title %]" />
+		<meta property="og:site_name" content="Dilbert Website 2000" />
+		<meta property="og:type" content="article" />
+		<meta property="og:image" content="[% image_url %]" />
+		<meta property="og:image:secure_url" content="[% image_url %]" />
+		<meta property="og:url" content="[% comic_url %]" />
+
+
+<style type="text/css">
+body {
+	background-color: #020507;
+	text-align: center;
+        position: fixed;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	font: small-caps 56px sans-serif;
+	font-weight: bold;
+}
+.first {
+	color: red;
+	display: inline-block;
+	transform: skew(12deg, 0deg);
+}
+.second {
+	color: green;
+	display: inline-block;
+	font-style: oblique;
+}
+.third {
+	color: blue;
+	display: inline-block;
+	transform: skew(12deg, 0deg);
+}
+.buttons {
+	display: inline-block;
+}
+.comic {
+	max-height: 80vh;
+	max-width: 80vw;
+}
+.subtitle {
+	top: 0%;
+	left: 0%;
+	-webkit-transform: translate(0%, 0%);
+	transform: translate(0%, 0%);
+	color: lightslategray;
+	font: normal 24px sans-serif;
+	font-weight: bold;
+}
+</style>
+    <script>
+		var currentDate = new Date([% year %], [% month %], [% day %])
+
+		function dateUrl(d) {
+			return d.toISOString().split("T")[0]
+		}
+
+        function getRandomDate() {
+			// Apr 16 '89 to Mar 12 '23, 
+			// but indexed from 0 due to Javascript
+            start = new Date(1989, 3, 16)
+            end = new Date(2023, 2, 12)
+            const timeDiff = end.getTime() - start.getTime();
+            const randomTime = Math.random() * timeDiff;
+            return new Date(start.getTime() + randomTime)
+        }
+
+		function showComic() {
+			window.location.href = "/" + dateUrl(currentDate);
+		}
+
+		function showRandomComic() {
+			currentDate = getRandomDate()
+			showComic()
+		}
+
+		function showYesterdayComic() {
+			currentDate = new Date(currentDate.getTime() - 86400000)
+			showComic()
+		}
+
+		function showTomorrowComic() {
+			currentDate = new Date(currentDate.getTime() + 86400000)
+			showComic()
+		}
+
+		function todayIn(selector) {
+			newDay = new Date()
+			newDay.setYear(selector.value)
+			currentDate = newDay
+			showComic()
+		}
+
+    </script>
+	<script>
+		function prepareBody() {
+			let selector = document.getElementById("year")
+			for (var year = 1989; year < 2024; year++) {
+				let option_elem = document.createElement('option');
+				option_elem.value = year;
+				option_elem.textContent = year;
+				selector.appendChild(option_elem);
+			}
+		}
+	</script>
+	</head>
+	<body onload="prepareBody()">
+		<div>
+			<span class="first">
+				Dilbert
+			</span>
+			<span class="second">
+				Website
+			</span>
+			<span class="third">
+				2000
+			</span>
+		</div>
+		<div>
+			<image id="comic" class="comic" onerror='alert("Image error, contact management")' src="[% image_url %]"></image>
+		</div>
+	    <div>
+			<span class="buttons">
+				<button type="button" onclick="showYesterdayComic()">Yesterday's Comic</button>
+			</span>
+			<span class="buttons">
+				<button type="button" onclick="showRandomComic()">Random Comic</button>
+			</span>
+			<span class="buttons">
+				<button type="button" onclick="showTomorrowComic()">Tomorrow's Comic</button>
+			</span>
+		</div>
+		<div class="subtitle">
+			Today in...
+			<select name="year" id="year" onchange="todayIn(this)">
+			</select>
+		</div>
+	</body>
+</html>

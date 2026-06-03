@@ -1,6 +1,12 @@
 # A viewer for Dilbert cartoons.
 
-I got an archive of Dilbert comics, mostly as GIFs, from the [Internet Archive](https://archive.org/details/dilbert-1989-2023-complete.-7z_202303) and needed a viewer. I used the tools in `utils` to rename all the files to just an ISO-8601 date, and then if you can statically host those, it's easy to use a Javascript frontend (`index.html`) to look at them. I used an S3 bucket for my copy, you can use whatever you like for yourself.
+I got an archive of Dilbert comics, mostly as GIFs, from the [Internet Archive](https://archive.org/details/dilbert-1989-2023-complete.-7z_202303) and needed a viewer. I used the tools in `utils` to rename all the files to just an ISO-8601 date, and then if you can statically host those, it's easy to use a Javascript frontend (`client_side_viewer/index.html`) to look at them. I used an S3 bucket for my copy, you can use whatever you like for yourself.
+
+There's a live demo at [Dilbert Website 2000](https://dilbert-static.transglobal.world).
+
+# A dynamic viewer for Dilbert cartoons.
+
+In order to compute [OGP](https://ogp.me) properties for each comic without too much headache, it was necessary to pre-generate the comic pages on the server. There is a Perl-based PSGI viewer in `server_side_viewer`.
 
 There's a live demo at [Dilbert Website 2000](https://dilbert.transglobal.world).
 
